@@ -15,5 +15,5 @@ There are various ways to download and use the StudyAid application. The first a
 
 ## Dependencies
 This program was created using the following libraries. A special thanks to the publishers.
-[CustomTkinter](https://github.com/TomSchimansky/CustomTkinter)
-[TkCalendar](https://pypi.org/project/tkcalendar/#:~:text=tkcalendar%20is%20a%20python%20module,list%20for%20a%20given%20day.)
+> [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter)
+> [TkCalendar](https://pypi.org/project/tkcalendar/#:~:text=tkcalendar%20is%20a%20python%20module,list%20for%20a%20given%20day.)
