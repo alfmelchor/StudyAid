@@ -6,3 +6,11 @@ An application used to track assignments and overall improve productivity.
 - [Usage](#usage)
 - [Dependencies](#dependencies)
 - [Open Source](#opensource)
+
+## Background
+
+## Usage
+
+## Dependencies
+
+## Open Source
