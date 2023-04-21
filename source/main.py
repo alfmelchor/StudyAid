@@ -5,20 +5,22 @@ from tkcalendar import Calendar
 import datetime
 
 import credentialsPage
-from page_assignments import AssignmentsPage, Assignment
+import page_assignments
+from page_assignments import AssignmentsPage, Assignment, import_assignments
 
-ctk.set_appearance_mode("Light")
 WINDOW_WIDTH = 1600
 WINDOW_HEIGHT = 900
-window = ctk.CTk()
-window.title("Study Aid - BETA 0.0")
-window.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
-window.resizable(False, False)
+
+ctk.set_appearance_mode("Light")
+window = ctk.CTk()  # Creates the root window for the program
+window.title("Study Aid - DEVELOPMENT")  # Sets the title for the program
+window.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")  # Sets the geometry for the program
+window.resizable(False, False)  # Disables resizing, soon to be removed once frame resizing is configured
 window.rowconfigure((1, 2, 3, 4, 5), weight=1)
 window.columnconfigure((1, 2, 3, 4, 5), weight=1)
 
 
-class Sidebar:
+class Sidebar:  # Class to handle the Sidebar on the window
     def __init__(self, parent):
         self.parent = parent
         self.active = False
@@ -57,42 +59,21 @@ class Sidebar:
 def hidePages(credPage, page=None):
     global pg_assignments
     credPage.frame.destroy()
-    sidebar = Sidebar(window)
-    sidebar.active = True
+    Sidebar(window)
+    Sidebar.active = True
     if page == 'Dashboard':
         pass
     elif page == 'Assignments':
         pg_assignments = AssignmentsPage(window)
-        pg_assignments.import_command = import_assignments
-        import_assignments()
+        page_assignments.assn_page_frame = pg_assignments
+        import_assignments(pg_assignments)
     elif page == 'Transfers':
         pass
     elif page == 'Schedules':
         pass
 
 
-assignments_made = []
-
-
-def import_assignments():  # Function to import assignments from the JSON file
-    try:
-        for assn in assignments_made:
-            print(assn)
-        with open("user_assn.json", "r") as file:
-            assignments = json.load(file)
-            for assn in assignments:
-                assignment = Assignment(pg_assignments.childrenFrame, f"{assn['name']}", f"{assn['class']}",
-                                        f"{assn['duedate']}", f"{assn['duetime']}", f"{assn['platform']}",
-                                        f"{assn['status']}")
-                assignment.assignmentStatusLabel.set(assn['status'])
-                assignments_made.append(assignment.frame)
-
-    except json.decoder.JSONDecodeError:
-        pass
-
-
 credentials = credentialsPage.CredentialsMenu(window)
-# credentials.loginButton.configure(command=lambda credPage=credentials: hidePages(credPage, 'Assignments'))
 
 hidePages(credentials, 'Assignments')
 
