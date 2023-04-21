@@ -4,11 +4,13 @@ import json
 from tkcalendar import Calendar
 import datetime
 
+assn_page_frame = None
+assignments_made = []
 
-class AssignmentsPage:
+
+class AssignmentsPage:  # Class to handle the main frame that holds the header and the individual assignments
     def __init__(self, parent):
         self.parent = parent
-        self.import_command = None
         self.frame = ctk.CTkFrame(self.parent, width=1480, height=900, corner_radius=0)
         self.frame.propagate(False)
         self.frame.grid(row=1, column=1, sticky='nw')
@@ -40,19 +42,24 @@ class AssignmentsPage:
                                              hover_color='#197b5c', command=self.create_new_assignment)
         self.createNewButton.pack(side=tk.RIGHT)
 
-        # Scrollable Frame
+        # Scrollable Frame, parent for all Assignment frames
         self.childrenFrame = ctk.CTkScrollableFrame(self.frame, width=1480, height=840, corner_radius=0)
         self.childrenFrame.pack(pady=15)
 
-    def create_new_assignment(self):
+    @staticmethod
+    def create_new_assignment():
         new = AddAssnWindow()
-        new.import_command = self.import_command
+        new.assn_page_frame = assn_page_frame
+
+    @staticmethod
+    def update_assignment_list():
+        for assn in assignments_made:
+            assn.destroy()
 
 
-class AddAssnWindow(ctk.CTkToplevel):
+class AddAssnWindow(ctk.CTkToplevel):  # Additional window to handle the options to create a new assignment
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.import_command = None
         self.geometry("400x600")
         self.resizable(False, False)
         self.title("New Assignment")
@@ -109,7 +116,7 @@ class AddAssnWindow(ctk.CTkToplevel):
                                                 command=self.create_assignment)
         self.confirm_assignment.place(x=135, y=560)
 
-    def create_assignment(self):
+    def create_assignment(self):  # Function to create a new assignment
         assignmentName = self.assignment_name.get()
         assignmentClass = self.assignment_class.get()
         assignmentDueDate = self.assignment_duedate.get_date()
@@ -144,18 +151,18 @@ class AddAssnWindow(ctk.CTkToplevel):
                 with open("user_assn.json", "w") as file:
                     json.dump(dicts, file, indent=4)
 
-            eval(self.import_command)
+            import_assignments(assn_page_frame)
             self.reset()
             self.destroy()
 
-    def reset(self):
+    def reset(self):  # Resets the additional window
         self.assignment_name.delete(0, tk.END)
         self.assignment_class.set('-')
         self.assignment_duetime_convention.set('PM')
         self.assignment_platform.delete(0, tk.END)
 
 
-class Assignment:
+class Assignment:  # Class that creates individual assignment objects
     def __init__(self, parent, assignmentName="", assignmentClass="", assignmentDueDate="", assignmentDueTime="",
                  assignmentPlatform="", assignmentStatus="To Do"):
         self.parent = parent
@@ -196,17 +203,35 @@ class Assignment:
         self.assignmentStatusLabel.pack(side=tk.LEFT, padx=70)
 
     @staticmethod
-    def update_status(new_status, assn_name):
+    def update_status(new_status, assn_name):  # Function to update the status of individual assignments
         with open('user_assn.json', 'r') as file:
             assignments = json.load(file)
 
         for item in assignments:
             if item['name'] == assn_name:
                 if new_status == 'Done':
-                    # assignments.remove(item)
+                    assignments.remove(item)
                     break
                 else:
                     item['status'] = new_status
 
         with open('user_assn.json', "w") as file:
             json.dump(assignments, file, indent=4)
+
+        import_assignments(assn_page_frame)
+
+
+def import_assignments(page):  # Function to import assignments from the JSON file
+    AssignmentsPage.update_assignment_list()
+    try:
+        with open("user_assn.json", "r") as file:
+            assignments = json.load(file)
+            for assn in assignments:
+                assignment = Assignment(page.childrenFrame, f"{assn['name']}", f"{assn['class']}",
+                                        f"{assn['duedate']}", f"{assn['duetime']}", f"{assn['platform']}",
+                                        f"{assn['status']}")
+                assignment.assignmentStatusLabel.set(assn['status'])
+                assignments_made.append(assignment.frame)
+
+    except json.decoder.JSONDecodeError:
+        pass
