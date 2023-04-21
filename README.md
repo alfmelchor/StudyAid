@@ -4,8 +4,3 @@ An open-source application used to track assignments and overall improve product
 
 ## Table of Contents
 > Coming Soon . .
-
-## Dependencies
-This program was created using the following libraries. A special thanks to the publishers.
-> [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter)
-> [TkCalendar](https://pypi.org/project/tkcalendar/#:~:text=tkcalendar%20is%20a%20python%20module,list%20for%20a%20given%20day.)
