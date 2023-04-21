@@ -3,8 +3,9 @@ import tkinter as tk
 
 
 class CredentialsMenu:
-    def __init__(self, parent):
+    def __init__(self, parent, callback):
         self.parent = parent
+        self.callback = callback
         self.frame = ctk.CTkFrame(self.parent, width=500, height=500, fg_color='#EBEBEB')
         self.frame.grid(row=3, column=3)
 
@@ -28,9 +29,13 @@ class CredentialsMenu:
         if self.userEntry.get() == 'user' and self.passEntry.get() == 'pass':
             self.credentialsMessage.configure(text="")
             self.loginButton.configure(text="Logging in..")
+            result = True
         else:
             self.credentialsMessage.configure(text="Incorrect credentials.", text_color="red")
             self.credentialsMessage.pack()
+            result = False
+
+        self.callback(result)
 
     def resetCredentials(self):
         self.credentialsMessage.configure(text="")

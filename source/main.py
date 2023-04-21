@@ -4,12 +4,12 @@ import json
 from tkcalendar import Calendar
 import datetime
 
-import credentialsPage
+import page_credentials
 import page_assignments
-from page_assignments import AssignmentsPage, Assignment, import_assignments
+import page_settings
 
-WINDOW_WIDTH = 1600
-WINDOW_HEIGHT = 900
+WINDOW_WIDTH = 1400
+WINDOW_HEIGHT = 800
 
 ctk.set_appearance_mode("Light")
 window = ctk.CTk()  # Creates the root window for the program
@@ -31,20 +31,23 @@ class Sidebar:  # Class to handle the Sidebar on the window
         self.sidebar_frame.propagate(False)
 
         self.dashboardButton = ctk.CTkButton(self.sidebar_frame, text_color='white', fg_color="transparent",
-                                             text="Dashboard", hover_color='#1C9670', width=100, height=25, anchor="w")
+                                             text="Dashboard", hover_color='#1C9670', width=100, height=25, anchor="w",
+                                             command=lambda: open_page('Dashboard'))
         self.dashboardButton.place(x=10, y=20)
 
-        self.transfersButton = ctk.CTkButton(self.sidebar_frame, text_color='white', fg_color="transparent",
-                                             text="Assignments", hover_color='#1C9670', width=100, height=25,
-                                             anchor="w")
-        self.transfersButton.place(x=10, y=60)
+        self.assignmentsButton = ctk.CTkButton(self.sidebar_frame, text_color='white', fg_color="transparent",
+                                               text="Assignments", hover_color='#1C9670', width=100, height=25,
+                                               anchor="w", command=lambda: open_page('Assignments'))
+        self.assignmentsButton.place(x=10, y=60)
 
-        self.schedulesButton = ctk.CTkButton(self.sidebar_frame, text_color='white', fg_color="transparent",
-                                             text="Study Aid", hover_color='#1C9670', width=100, height=25, anchor="w")
-        self.schedulesButton.place(x=10, y=100)
+        self.studyAidButton = ctk.CTkButton(self.sidebar_frame, text_color='white', fg_color="transparent",
+                                            text="Study Aid", hover_color='#1C9670', width=100, height=25, anchor="w",
+                                            command=lambda: open_page('Study Aid'))
+        self.studyAidButton.place(x=10, y=100)
 
         self.settingsButton = ctk.CTkButton(self.sidebar_frame, text_color='white', fg_color="transparent",
-                                            text="Settings", hover_color='#1C9670', width=100, height=25, anchor="w")
+                                            text="Settings", hover_color='#1C9670', width=100, height=25, anchor="w",
+                                            command=lambda: open_page('Settings'))
         self.settingsButton.place(x=10, y=140)
 
         self.versionLabel = ctk.CTkLabel(self.sidebar_frame, text_color='white', fg_color="transparent",
@@ -56,25 +59,37 @@ class Sidebar:  # Class to handle the Sidebar on the window
         self.lastSaveLabel.pack(side=tk.BOTTOM)
 
 
-def hidePages(credPage, page=None):
-    global pg_assignments
-    credPage.frame.destroy()
-    Sidebar(window)
-    Sidebar.active = True
-    if page == 'Dashboard':
-        pass
-    elif page == 'Assignments':
-        pg_assignments = AssignmentsPage(window)
-        page_assignments.assn_page_frame = pg_assignments
-        import_assignments(pg_assignments)
-    elif page == 'Transfers':
-        pass
-    elif page == 'Schedules':
-        pass
+# noinspection PyGlobalUndefined
+def open_page(page):
+    global opened_page
+    if page == 'Credentials':  # Opens the Login page
+        def credentialsCallback(result):
+            open_page('Assignments')
+        opened_page = page_credentials.CredentialsMenu(window, credentialsCallback)
+
+    else:
+        try:
+            opened_page.frame.destroy()
+        except NameError:
+            pass
+        if page == 'Dashboard':  # Opens the Dashboard page
+            Sidebar(window)
+
+        elif page == 'Assignments':  # Opens the Assignments page
+            Sidebar(window)
+            opened_page = page_assignments.AssignmentsPage(window)
+            page_assignments.assn_page_frame = opened_page
+            page_assignments.import_assignments(opened_page)
+
+        elif page == 'Study Aid':  # Opens the Study Aid page
+            Sidebar(window)
+
+        elif page == 'Settings':  # Opens the Settings page
+            Sidebar(window)
+            opened_page = page_settings.SettingsPage(window)
 
 
-credentials = credentialsPage.CredentialsMenu(window)
-
-hidePages(credentials, 'Assignments')
+# Initial Calls
+open_page('Settings')
 
 window.mainloop()
