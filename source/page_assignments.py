@@ -11,25 +11,25 @@ assignments_made = []
 class AssignmentsPage:  # Class to handle the main frame that holds the header and the individual assignments
     def __init__(self, parent):
         self.parent = parent
-        self.frame = ctk.CTkFrame(self.parent, width=1480, height=900, corner_radius=0)
+        self.frame = ctk.CTkFrame(self.parent, width=970, height=600, corner_radius=0)
         self.frame.propagate(False)
         self.frame.grid(row=1, column=1, sticky='nw')
 
         # Header Frame
-        self.headerFrame = ctk.CTkFrame(self.frame, width=1480, height=35, corner_radius=0)
+        self.headerFrame = ctk.CTkFrame(self.frame, width=970, height=35, corner_radius=0, fg_color='#414c59')
         self.headerFrame.propagate(False)
         self.headerFrame.pack(side=tk.TOP)
 
-        self.label = ctk.CTkLabel(self.headerFrame, width=100, height=35, text="Assignment Name",
-                                  font=('Arial', 15, 'bold')).pack(side=tk.LEFT, padx=15)
-        self.label = ctk.CTkLabel(self.headerFrame, width=100, height=35, text="Class",
-                                  font=('Arial', 15, 'bold')).pack(side=tk.LEFT, padx=50)
-        self.label = ctk.CTkLabel(self.headerFrame, width=100, height=35, text="Due Date",
-                                  font=('Arial', 15, 'bold')).pack(side=tk.LEFT, padx=50)
-        self.label = ctk.CTkLabel(self.headerFrame, width=100, height=35, text="Platform",
-                                  font=('Arial', 15, 'bold')).pack(side=tk.LEFT, padx=50)
-        self.label = ctk.CTkLabel(self.headerFrame, width=100, height=35, text="Status",
-                                  font=('Arial', 15, 'bold')).pack(side=tk.LEFT, padx=50)
+        self.label = ctk.CTkLabel(self.headerFrame, width=100, height=30, text="Assignment Name",
+                                  font=('Arial', 15), text_color='white',).pack(side=tk.LEFT, padx=15)
+        self.label = ctk.CTkLabel(self.headerFrame, width=100, height=30, text="Class", text_color='white',
+                                  font=('Arial', 15)).pack(side=tk.LEFT, padx=20)
+        self.label = ctk.CTkLabel(self.headerFrame, width=100, height=30, text="Due Date", text_color='white',
+                                  font=('Arial', 15)).pack(side=tk.LEFT, padx=20)
+        self.label = ctk.CTkLabel(self.headerFrame, width=100, height=30, text="Platform", text_color='white',
+                                  font=('Arial', 15)).pack(side=tk.LEFT, padx=20)
+        self.label = ctk.CTkLabel(self.headerFrame, width=100, height=30, text="Status", text_color='white',
+                                  font=('Arial', 15)).pack(side=tk.LEFT, padx=10)
 
         self.sortbyButton = ctk.CTkOptionMenu(self.headerFrame, width=35, height=25,
                                               values=['Sort By: Due Date', 'Sort By: Status', 'Sort By: Class'],
@@ -181,15 +181,15 @@ class Assignment:  # Class that creates individual assignment objects
         self.assignmentNameLabel.pack(side=tk.LEFT, padx=15)
 
         self.assignmentClassLabel = ctk.CTkLabel(self.frame, text=f'{self.assignmentClass}', width=120, height=30)
-        self.assignmentClassLabel.pack(side=tk.LEFT, padx=50)
+        self.assignmentClassLabel.pack(side=tk.LEFT, padx=20)
 
         self.assignmentDueDateLabel = ctk.CTkLabel(self.frame,
                                                    text=f'{self.assignmentDueDate} at {self.assignmentDueTime}',
                                                    width=120, height=30)
-        self.assignmentDueDateLabel.pack(side=tk.LEFT, padx=30)
+        self.assignmentDueDateLabel.pack(side=tk.LEFT, padx=5)
 
         self.assignmentPlatformLabel = ctk.CTkLabel(self.frame, text=f'{self.assignmentPlatform}', width=120, height=30)
-        self.assignmentPlatformLabel.pack(side=tk.LEFT, padx=40)
+        self.assignmentPlatformLabel.pack(side=tk.LEFT, padx=3)
 
         self.assignmentStatusLabel = ctk.CTkOptionMenu(self.frame, width=80, height=25,
                                                        values=['To Do', 'Doing', 'Done'],
@@ -200,7 +200,7 @@ class Assignment:  # Class that creates individual assignment objects
                                                                       instname=assignmentName: self.update_status(value,
                                                                                                                   instname))
         self.assignmentStatusLabel.set(f'{self.assignmentStatus}')
-        self.assignmentStatusLabel.pack(side=tk.LEFT, padx=70)
+        self.assignmentStatusLabel.pack(side=tk.LEFT, padx=35)
 
     @staticmethod
     def update_status(new_status, assn_name):  # Function to update the status of individual assignments

@@ -1,15 +1,15 @@
 import customtkinter as ctk
 import tkinter as tk
+from PIL import Image
 import json
-from tkcalendar import Calendar
-import datetime
 
 import page_credentials
 import page_assignments
 import page_settings
+import page_studyaid
 
-WINDOW_WIDTH = 1400
-WINDOW_HEIGHT = 800
+WINDOW_WIDTH = 1100
+WINDOW_HEIGHT = 600
 
 ctk.set_appearance_mode("Light")
 window = ctk.CTk()  # Creates the root window for the program
@@ -32,22 +32,26 @@ class Sidebar:  # Class to handle the Sidebar on the window
 
         self.dashboardButton = ctk.CTkButton(self.sidebar_frame, text_color='white', fg_color="transparent",
                                              text="Dashboard", hover_color='#1C9670', width=100, height=25, anchor="w",
-                                             command=lambda: open_page('Dashboard'))
+                                             command=lambda: open_page('Dashboard'),
+                                             image=ctk.CTkImage(light_image=Image.open('icons/home.png'), size=(15, 12)), state='disabled')
         self.dashboardButton.place(x=10, y=20)
 
         self.assignmentsButton = ctk.CTkButton(self.sidebar_frame, text_color='white', fg_color="transparent",
                                                text="Assignments", hover_color='#1C9670', width=100, height=25,
-                                               anchor="w", command=lambda: open_page('Assignments'))
+                                               anchor="w", command=lambda: open_page('Assignments'),
+                                               image=ctk.CTkImage(light_image=Image.open('icons/assignment.png'), size=(12, 12)))
         self.assignmentsButton.place(x=10, y=60)
 
         self.studyAidButton = ctk.CTkButton(self.sidebar_frame, text_color='white', fg_color="transparent",
                                             text="Study Aid", hover_color='#1C9670', width=100, height=25, anchor="w",
-                                            command=lambda: open_page('Study Aid'))
+                                            command=lambda: open_page('StudyAid'),
+                                            image=ctk.CTkImage(light_image=Image.open('icons/noteball.png'), size=(12, 12)))
         self.studyAidButton.place(x=10, y=100)
 
         self.settingsButton = ctk.CTkButton(self.sidebar_frame, text_color='white', fg_color="transparent",
                                             text="Settings", hover_color='#1C9670', width=100, height=25, anchor="w",
-                                            command=lambda: open_page('Settings'))
+                                            command=lambda: open_page('Settings'),
+                                            image=ctk.CTkImage(light_image=Image.open('icons/settings.png'), size=(12, 12)))
         self.settingsButton.place(x=10, y=140)
 
         self.versionLabel = ctk.CTkLabel(self.sidebar_frame, text_color='white', fg_color="transparent",
@@ -65,6 +69,7 @@ def open_page(page):
     if page == 'Credentials':  # Opens the Login page
         def credentialsCallback(result):
             open_page('Assignments')
+
         opened_page = page_credentials.CredentialsMenu(window, credentialsCallback)
 
     else:
@@ -81,8 +86,9 @@ def open_page(page):
             page_assignments.assn_page_frame = opened_page
             page_assignments.import_assignments(opened_page)
 
-        elif page == 'Study Aid':  # Opens the Study Aid page
+        elif page == 'StudyAid':  # Opens the Study Aid page
             Sidebar(window)
+            opened_page = page_studyaid.StudyAidPage(window)
 
         elif page == 'Settings':  # Opens the Settings page
             Sidebar(window)
@@ -90,6 +96,6 @@ def open_page(page):
 
 
 # Initial Calls
-open_page('Settings')
+open_page('StudyAid')
 
 window.mainloop()
