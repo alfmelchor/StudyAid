@@ -11,14 +11,16 @@ assignments_made = []
 class AssignmentsPage:  # Class to handle the main frame that holds the header and the individual assignments
     def __init__(self, parent):
         self.parent = parent
-        self.frame = ctk.CTkFrame(self.parent, width=970, height=600, corner_radius=0)
+        self.frame = ctk.CTkFrame(self.parent, corner_radius=0)
         self.frame.propagate(False)
-        self.frame.grid(row=1, column=1, sticky='nw')
+        self.frame.grid(row=1, rowspan=6, column=1, columnspan=6, sticky='nsew')
+        self.frame.rowconfigure((1, 2, 3, 4, 5), weight=1)
+        self.frame.columnconfigure((1, 2, 3, 4, 5), weight=1)
 
         # Header Frame
-        self.headerFrame = ctk.CTkFrame(self.frame, width=970, height=35, corner_radius=0, fg_color='#414c59')
+        self.headerFrame = ctk.CTkFrame(self.frame, height=35, corner_radius=0, fg_color='#414c59')
         self.headerFrame.propagate(False)
-        self.headerFrame.pack(side=tk.TOP)
+        self.headerFrame.grid(row=0, column=0, columnspan=6, sticky='nsew')
 
         self.label = ctk.CTkLabel(self.headerFrame, width=100, height=30, text="Assignment Name",
                                   font=('Arial', 15), text_color='white',).pack(side=tk.LEFT, padx=15)
@@ -43,8 +45,9 @@ class AssignmentsPage:  # Class to handle the main frame that holds the header a
         self.createNewButton.pack(side=tk.RIGHT)
 
         # Scrollable Frame, parent for all Assignment frames
-        self.childrenFrame = ctk.CTkScrollableFrame(self.frame, width=1480, height=840, corner_radius=0)
+        self.childrenFrame = ctk.CTkScrollableFrame(self.frame, corner_radius=0)
         self.childrenFrame.pack(pady=15)
+        self.childrenFrame.grid(row=1, rowspan=6, column=1, columnspan=6, sticky='nsew')
 
     @staticmethod
     def create_new_assignment():

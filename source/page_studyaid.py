@@ -9,13 +9,15 @@ class StudyAidPage:
     def __init__(self, parent):
         self.parent = parent
         self.session = None
-        self.frame = ctk.CTkFrame(self.parent, width=970, height=600, corner_radius=0)
+        self.frame = ctk.CTkFrame(self.parent, corner_radius=0)
         self.frame.propagate(False)
-        self.frame.grid(row=1, column=1, sticky='nw')
+        self.frame.grid(row=1, rowspan=6, column=1, columnspan=6, sticky='nsew')
+        self.frame.rowconfigure((1, 2, 3, 4, 5), weight=1)
+        self.frame.columnconfigure((1, 2, 3, 4, 5), weight=1)
 
-        self.options_frame = ctk.CTkFrame(self.frame, width=970, height=40, corner_radius=0, fg_color='#414c59')
+        self.options_frame = ctk.CTkFrame(self.frame, height=40, corner_radius=0, fg_color='#414c59')
         self.options_frame.propagate(False)
-        self.options_frame.pack(side=tk.TOP)
+        self.options_frame.grid(row=0, column=0, columnspan=6, sticky='nsew')
 
         self.timedButton = ctk.CTkButton(self.options_frame, text_color='white', fg_color="#4e5966",
                                          text="Timed Session", hover_color='#1C9670', width=100, height=25,
@@ -41,9 +43,11 @@ class StudyAidPage:
 class TimedSession:
     def __init__(self, parent):
         self.parent = parent
-        self.frame = ctk.CTkFrame(self.parent, width=970, height=560)
+        self.frame = ctk.CTkFrame(self.parent, corner_radius=0)
         self.frame.propagate(False)
-        self.frame.pack()
+        self.frame.grid(row=1, rowspan=6, column=1, columnspan=6, sticky='nsew')
+        self.frame.rowconfigure((1, 2, 3, 4, 5), weight=1)
+        self.frame.columnconfigure((1, 2, 3, 4, 5), weight=1)
 
         self.session = ctk.CTkLabel(self.frame, text="Session 1", font=('Arial', 15)).pack(pady=5)
         self.timer = ctk.CTkLabel(self.frame, text="00:00:00", font=('Arial', 60, 'bold'))
@@ -51,14 +55,15 @@ class TimedSession:
 
         self.start_button = ctk.CTkButton(self.frame, width=80, text="START", fg_color='#1C9670', hover_color='#197b5c',
                                           command=self.start_timer)
-        self.start_button.place(x=355, y=130)
+        self.start_button.grid(row=3, column=2)
 
         self.stop_button = ctk.CTkButton(self.frame, width=80, text="STOP", fg_color='#1C9670', hover_color='#197b5c',
                                          command=self.stop_timer, state=ctk.DISABLED)
-        self.stop_button.place(x=450, y=130)
+        self.stop_button.grid(row=3, column=3)
 
-        self.reset_button = ctk.CTkButton(self.frame, width=80, text="RESET", fg_color='#1C9670', hover_color='#197b5c', state='disabled', command=self.reset_timer)
-        self.reset_button.place(x=545, y=130)
+        self.reset_button = ctk.CTkButton(self.frame, width=80, text="RESET", fg_color='#1C9670', hover_color='#197b5c',
+                                          state='disabled', command=self.reset_timer)
+        self.reset_button.grid(row=3, column=4)
 
         self.start_time = None
         self.is_running = False
@@ -101,9 +106,11 @@ class TimedSession:
 class FocusSession:
     def __init__(self, parent):
         self.parent = parent
-        self.frame = ctk.CTkFrame(self.parent, width=970, height=560)
+        self.frame = ctk.CTkFrame(self.parent, corner_radius=0)
         self.frame.propagate(False)
-        self.frame.pack()
+        self.frame.grid(row=1, rowspan=6, column=1, columnspan=6, sticky='nsew')
+        self.frame.rowconfigure((1, 2, 3, 4, 5), weight=1)
+        self.frame.columnconfigure((1, 2, 3, 4, 5), weight=1)
 
         self.session = ctk.CTkLabel(self.frame, text="Focus Session", font=('Arial', 20, 'bold')).pack(pady=10)
 
@@ -124,15 +131,15 @@ class FocusSession:
 
         self.start_button = ctk.CTkButton(self.frame, width=80, text="START", fg_color='#1C9670', hover_color='#197b5c',
                                           command=self.start_timer, state='disabled')
-        self.start_button.place(x=350, y=190)
+        self.start_button.grid(row=3, column=2)
 
         self.pause_button = ctk.CTkButton(self.frame, width=80, text="PAUSE", fg_color='#1C9670', hover_color='#197b5c',
                                           command=self.pause_timer, state='disabled')
-        self.pause_button.place(x=445, y=190)
+        self.pause_button.grid(row=3, column=3)
 
         self.reset_button = ctk.CTkButton(self.frame, width=80, text="RESET", fg_color='#1C9670', hover_color='#197b5c',
                                           command=self.reset_timer, state='disabled')
-        self.reset_button.place(x=540, y=190)
+        self.reset_button.grid(row=3, column=4)
 
         self.timer_running = False
         self.paused = False
@@ -154,6 +161,7 @@ class FocusSession:
         time_string = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
         self.timer.configure(text=time_string)
         if self.total_seconds == 0:
+            # Push notification that timer is over
             self.start_button.configure(state='disabled')
         else:
             self.start_button.configure(state='normal')
