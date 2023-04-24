@@ -14,4 +14,4 @@ An open-source application used to track assignments and overall improve product
 | _A timed session on macOS, similar to a stopwatch._
 
 ![](examples/focus_session.png)
-| _A focus session on macOS. A user may take a break every 15 minutes._
+| _A focus session on macOS. A user will be notified when a break should be taken._
