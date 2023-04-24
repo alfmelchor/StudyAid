@@ -6,4 +6,5 @@ An open-source application used to track assignments and overall improve product
 > Coming Soon . .
 
 ## Examples
-<img src="examples/assignments.png" width="400"/>
+This is an example of a few assignments via the Assignments tab.
+<img src="examples/assignments.png" width="700"/>
