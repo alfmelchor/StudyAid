@@ -6,5 +6,12 @@ An open-source application used to track assignments and overall improve product
 > Coming Soon . .
 
 ## Examples
-This is an example of a few assignments via the Assignments tab.
+
 <img src="examples/assignments.png" width="700"/>
+> This is an example of a few assignments via the Assignments tab.
+
+<img src="examples/timed_session.png" width="700"/>
+> This is an example of a timed session which runs a stopwatch.
+
+<img src="examples/focus_session.png" width="700"/>
+> This is an example of a focus session which allows the user to be focused until their break comes up.
