@@ -4,3 +4,6 @@ An open-source application used to track assignments and overall improve product
 
 ## Table of Contents
 > Coming Soon . .
+
+## Examples
+<img src="examples/assignments.png" width="400"/>
