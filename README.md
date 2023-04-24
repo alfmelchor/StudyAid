@@ -7,11 +7,11 @@ An open-source application used to track assignments and overall improve product
 
 ## Examples
 
-<img src="examples/assignments.png" width="700"/>
-> This is an example of a few assignments via the Assignments tab.
+![](examples/assignments.png)
+| _An example of assignments on macOS via the Assignments tab._
 
-<img src="examples/timed_session.png" width="700"/>
-> This is an example of a timed session which runs a stopwatch.
+![](examples/timed_session.png)
+| _A timed session on macOS, similar to a stopwatch._
 
-<img src="examples/focus_session.png" width="700"/>
-> This is an example of a focus session which allows the user to be focused until their break comes up.
+![](examples/focus_session.png)
+| _A focus session on macOS. A user may take a break every 15 minutes._
