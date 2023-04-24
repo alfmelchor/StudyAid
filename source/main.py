@@ -6,7 +6,6 @@ import page_credentials
 import page_assignments
 import page_settings
 import page_studyaid
-import page_test
 
 WINDOW_WIDTH = 1100
 WINDOW_HEIGHT = 600
@@ -17,7 +16,7 @@ ctk.set_appearance_mode("LIGHT")
 class App:  # Creates the root window for the program
     def __init__(self):
         self.root = ctk.CTk()
-        self.root.title("Study Aid - DEVELOPMENT")
+        self.root.title("Study Aid")
         self.root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
         self.root.rowconfigure((1, 2, 3, 4, 5), weight=1)
         self.root.columnconfigure((1, 2, 3, 4, 5), weight=1)
@@ -34,7 +33,6 @@ class Sidebar:  # Class to handle the Sidebar on the window
         self.sidebar_frame.propagate(False)
         self.sidebar_frame.grid(row=0, column=0, rowspan=6, sticky="nsew")
         self.sidebar_frame.grid_rowconfigure((1, 2, 3, 4, 5), weight=1)
-        self.sidebar_frame.propagate(False)
 
         self.dashboardButton = ctk.CTkButton(self.sidebar_frame, text_color='white', fg_color="transparent",
                                              text="Dashboard", hover_color='#1C9670', width=100, height=25, anchor="w",
@@ -65,12 +63,8 @@ class Sidebar:  # Class to handle the Sidebar on the window
         self.settingsButton.place(x=10, y=140)
 
         self.versionLabel = ctk.CTkLabel(self.sidebar_frame, text_color='white', fg_color="transparent",
-                                         text="Version: --", width=100, height=25)
+                                         text="Version: BETA", width=100, height=25)
         self.versionLabel.pack(side=tk.BOTTOM)
-
-        self.lastSaveLabel = ctk.CTkLabel(self.sidebar_frame, text_color='white', fg_color="transparent",
-                                          text="Last Saved: --", width=100, height=25)
-        self.lastSaveLabel.pack(side=tk.BOTTOM)
 
 
 # noinspection PyGlobalUndefined
@@ -78,7 +72,8 @@ def open_page(page):
     global opened_page
     if page == 'Credentials':  # Opens the Login page
         def credentialsCallback(result):
-            open_page('Assignments')
+            if result:
+                open_page('Assignments')
 
         opened_page = page_credentials.CredentialsMenu(app.root, credentialsCallback)
 
@@ -106,6 +101,6 @@ def open_page(page):
 
 
 # Initial Calls
-open_page('Assignments')
+open_page('Credentials')
 
 app.root.mainloop()
