@@ -5,6 +5,11 @@ An open-source application used to track assignments and overall improve product
 ## Table of Contents
 > Coming Soon . .
 
+## Libraries Used
+[CustomTKinter](https://pypi.org/project/customtkinter/0.3/)
+[tkcalendar](https://pypi.org/project/tkcalendar/)
+[Pillow](https://pypi.org/project/Pillow/)
+
 ## Examples
 
 ![](examples/assignments.png)
