@@ -1,8 +1,8 @@
 import customtkinter as ctk
 import tkinter as tk
 from PIL import Image
+import json
 
-import page_credentials
 import page_assignments
 import page_settings
 import page_studyaid
@@ -11,6 +11,11 @@ WINDOW_WIDTH = 1100
 WINDOW_HEIGHT = 600
 
 ctk.set_appearance_mode("LIGHT")
+
+with open('config.json', 'r') as f:
+    data = json.load(f)
+    version = data['Version']
+    f.close()
 
 
 class App:  # Creates the root window for the program
@@ -63,44 +68,35 @@ class Sidebar:  # Class to handle the Sidebar on the window
         self.settingsButton.place(x=10, y=140)
 
         self.versionLabel = ctk.CTkLabel(self.sidebar_frame, text_color='white', fg_color="transparent",
-                                         text="Version: BETA", width=100, height=25)
+                                         text=f"Version: {version}", width=100, height=25)
         self.versionLabel.pack(side=tk.BOTTOM)
 
 
-# noinspection PyGlobalUndefined
 def open_page(page):
     global opened_page
-    if page == 'Credentials':  # Opens the Login page
-        def credentialsCallback(result):
-            if result:
-                open_page('Assignments')
+    try:
+        opened_page.frame.destroy()
+    except NameError:
+        pass
+    if page == 'Dashboard':  # Opens the Dashboard page
+        Sidebar(app.root)
 
-        opened_page = page_credentials.CredentialsMenu(app.root, credentialsCallback)
+    elif page == 'Assignments':  # Opens the Assignments page
+        Sidebar(app.root)
+        opened_page = page_assignments.AssignmentsPage(app.root)
+        page_assignments.assn_page_frame = opened_page
+        page_assignments.import_assignments(opened_page)
 
-    else:
-        try:
-            opened_page.frame.destroy()
-        except NameError:
-            pass
-        if page == 'Dashboard':  # Opens the Dashboard page
-            Sidebar(app.root)
+    elif page == 'StudyAid':  # Opens the Study Aid page
+        Sidebar(app.root)
+        opened_page = page_studyaid.StudyAidPage(app.root)
 
-        elif page == 'Assignments':  # Opens the Assignments page
-            Sidebar(app.root)
-            opened_page = page_assignments.AssignmentsPage(app.root)
-            page_assignments.assn_page_frame = opened_page
-            page_assignments.import_assignments(opened_page)
-
-        elif page == 'StudyAid':  # Opens the Study Aid page
-            Sidebar(app.root)
-            opened_page = page_studyaid.StudyAidPage(app.root)
-
-        elif page == 'Settings':  # Opens the Settings page
-            Sidebar(app.root)
-            opened_page = page_settings.SettingsPage(app.root)
+    elif page == 'Settings':  # Opens the Settings page
+        Sidebar(app.root)
+        opened_page = page_settings.SettingsPage(app.root)
 
 
 # Initial Calls
-open_page('Credentials')
+open_page('Settings')
 
 app.root.mainloop()
