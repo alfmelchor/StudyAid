@@ -1,0 +1,6 @@
+VERSION 0.1.0 - Beta Release
+* Updated the settings file to config.json.
+- Removed the Credentials page. Sign-in is no longer required.
+- Removed Startup tab in Settings.
+- Removed Debug tab in Settings.
++ Added functionality to the ChangeLog tab in settings. Upon opening the tab, any and all changes to the app will be displayed.
