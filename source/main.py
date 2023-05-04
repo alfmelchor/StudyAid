@@ -14,16 +14,10 @@ with open('config.json', 'r') as f:
     data = json.load(f)
     version = data['Version']
     appearance = data['Appearance']
-    accent_color = data['Accent_Color']
     f.close()
 
 ctk.set_appearance_mode(appearance)
 ctk.set_default_color_theme('themes/green.json')
-
-with open('config.json', 'r') as f:
-    data = json.load(f)
-    version = data['Version']
-    f.close()
 
 
 class App:  # Creates the root window for the program

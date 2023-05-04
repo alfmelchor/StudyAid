@@ -1,5 +1,13 @@
 import customtkinter as ctk
 import tkinter as tk
+import json
+from PIL import Image
+
+with open('config.json', 'r') as file:
+    data = json.load(file)
+    version = data['Version']
+    appearance = data['Appearance']
+    file.close()
 
 
 class SettingsPage:
@@ -49,6 +57,35 @@ class InteractionSettings:
         self.frame.propagate(False)
         self.frame.grid(row=1, rowspan=6, columnspan=6, sticky='nsew')
 
+        # Settings Variables
+        self.active_accent = None
+
+        # Section Header
+        ctk.CTkLabel(self.frame, text="Appearance", font=('TimesNewRoman', 20, 'bold')).pack(anchor='nw', padx=10,
+                                                                                             pady=10)
+
+        # Section Body
+        ctk.CTkLabel(self.frame, text="Choose your accent color.", font=('TimesNewRoman', 15)).pack(anchor='nw',
+                                                                                                    padx=10, pady=5)
+        self.green_accent = ctk.CTkButton(self.frame, text="", width=30, height=30, corner_radius=30,
+                                          fg_color='#1C9670', hover_color='#197b5c', command=lambda: self.set_active_color(self.green_accent))
+        self.green_accent.place(x=10, y=85)
+        self.blue_accent = ctk.CTkButton(self.frame, text="", width=30, height=30, corner_radius=30, command=lambda: self.set_active_color(self.blue_accent))
+        self.blue_accent.place(x=50, y=85)
+        self.red_accent = ctk.CTkButton(self.frame, text="", width=30, height=30, corner_radius=30, fg_color='red',
+                                        hover_color='dark red', command=lambda: self.set_active_color(self.red_accent))
+        self.red_accent.place(x=90, y=85)
+        self.yellow_accent = ctk.CTkButton(self.frame, text="", width=30, height=30, corner_radius=30,
+                                           fg_color='yellow', hover_color='#ccc233', command=lambda: self.set_active_color(self.yellow_accent))
+        self.yellow_accent.place(x=130, y=85)
+
+    def set_active_color(self, accent):
+        if self.active_accent is not None:
+            self.active_accent.configure(border_width=0)
+
+        accent.configure(border_color='white', border_width=2)
+        self.active_accent = accent
+
 
 class StudyAidSettings:
     def __init__(self, parent):
@@ -65,7 +102,14 @@ class ChangeLog:
         self.frame.propagate(False)
         self.frame.grid(row=1, rowspan=6, columnspan=6, sticky='nsew')
 
-        self.text = tk.Text(self.frame, width=950, height=550, bg='#DBDBDB', fg='black')
+        if appearance == 'Dark':
+            cl_bg = '#333333'
+            cl_fg = 'white'
+        else:
+            cl_bg = '#DBDBDB'
+            cl_fg = 'black'
+
+        self.text = tk.Text(self.frame, width=950, height=550, bg=cl_bg, fg=cl_fg)
         self.text.pack()
 
         with open('changelog.txt', 'r') as changelog:
