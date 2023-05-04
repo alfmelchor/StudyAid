@@ -10,7 +10,15 @@ import page_studyaid
 WINDOW_WIDTH = 1100
 WINDOW_HEIGHT = 600
 
-ctk.set_appearance_mode("LIGHT")
+with open('config.json', 'r') as f:
+    data = json.load(f)
+    version = data['Version']
+    appearance = data['Appearance']
+    accent_color = data['Accent_Color']
+    f.close()
+
+ctk.set_appearance_mode(appearance)
+ctk.set_default_color_theme('themes/green.json')
 
 with open('config.json', 'r') as f:
     data = json.load(f)
@@ -45,7 +53,6 @@ class Sidebar:  # Class to handle the Sidebar on the window
                                              image=ctk.CTkImage(light_image=Image.open('icons/home.png'),
                                                                 size=(15, 12)), state='disabled')
         self.dashboardButton.place(x=10, y=20)
-
         self.assignmentsButton = ctk.CTkButton(self.sidebar_frame, text_color='white', fg_color="transparent",
                                                text="Assignments", hover_color='#1C9670', width=100, height=25,
                                                anchor="w", command=lambda: open_page('Assignments'),
