@@ -14,6 +14,7 @@ with open('config.json', 'r') as f:
     data = json.load(f)
     version = data['Version']
     appearance = data['Appearance']
+    accent_color = data["Accent_Color"]
     f.close()
 
 ctk.set_appearance_mode(appearance)
@@ -42,20 +43,20 @@ class Sidebar:  # Class to handle the Sidebar on the window
         self.sidebar_frame.grid_rowconfigure((1, 2, 3, 4, 5), weight=1)
 
         self.dashboardButton = ctk.CTkButton(self.sidebar_frame, text_color='white', fg_color="transparent",
-                                             text="Dashboard", hover_color='#1C9670', width=100, height=25, anchor="w",
+                                             text="Dashboard", width=100, height=25, anchor="w",
                                              command=lambda: open_page('Dashboard'),
                                              image=ctk.CTkImage(light_image=Image.open('icons/home.png'),
                                                                 size=(15, 12)), state='disabled')
         self.dashboardButton.place(x=10, y=20)
         self.assignmentsButton = ctk.CTkButton(self.sidebar_frame, text_color='white', fg_color="transparent",
-                                               text="Assignments", hover_color='#1C9670', width=100, height=25,
+                                               text="Assignments", width=100, height=25,
                                                anchor="w", command=lambda: open_page('Assignments'),
                                                image=ctk.CTkImage(light_image=Image.open('icons/assignment.png'),
                                                                   size=(12, 12)))
         self.assignmentsButton.place(x=10, y=60)
 
         self.studyAidButton = ctk.CTkButton(self.sidebar_frame, text_color='white', fg_color="transparent",
-                                            text="Study Aid", hover_color='#1C9670', width=100, height=25, anchor="w",
+                                            text="Study Aid", width=100, height=25, anchor="w",
                                             command=lambda: open_page('StudyAid'),
                                             image=ctk.CTkImage(light_image=Image.open('icons/noteball.png'),
                                                                size=(12, 12)))

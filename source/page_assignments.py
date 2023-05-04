@@ -39,9 +39,7 @@ class AssignmentsPage:  # Class to handle the main frame that holds the header a
                                               dropdown_hover_color='#197b5c')
         self.sortbyButton.pack(side=tk.RIGHT)
 
-        self.createNewButton = ctk.CTkButton(self.headerFrame, width=35, height=25, text="+", anchor="center",
-                                             fg_color='#1C9670',
-                                             hover_color='#197b5c', command=self.create_new_assignment)
+        self.createNewButton = ctk.CTkButton(self.headerFrame, width=35, height=25, text="+", anchor="center", command=self.create_new_assignment)
         self.createNewButton.pack(side=tk.RIGHT)
 
         # Scrollable Frame, parent for all Assignment frames
@@ -77,10 +75,7 @@ class AddAssnWindow(ctk.CTkToplevel):  # Additional window to handle the options
         self.assn_class_hdr = ctk.CTkLabel(self, text="Class", font=('Arial', 15, 'bold')).pack(pady=8)
         self.assignment_class = ctk.CTkOptionMenu(self, width=70,
                                                   values=['Period 0', 'Period 1', 'Period 2', 'Period 3',
-                                                          'Period 4', 'Period 5', 'Period 6'], fg_color='#1C9670',
-                                                  button_color='#1C9670',
-                                                  button_hover_color='#197b5c',
-                                                  dropdown_hover_color='#197b5c', anchor=tk.CENTER)
+                                                          'Period 4', 'Period 5', 'Period 6'], anchor=tk.CENTER)
         self.assignment_class.pack(pady=2)
 
         self.assn_duedate_hdr = ctk.CTkLabel(self, text="Due Date and Time", font=('Arial', 15, 'bold')).pack(pady=8)
@@ -91,22 +86,13 @@ class AddAssnWindow(ctk.CTkToplevel):  # Additional window to handle the options
         self.assignment_duedate.pack(pady=2)
 
         self.assignment_duetime_hour = ctk.CTkOptionMenu(self, width=60, values=['1', '2', '3', '4', '5', '6', '7', '8',
-                                                                                 '9', '10', '11', '12'],
-                                                         fg_color='#1C9670', button_color='#1C9670',
-                                                         button_hover_color='#197b5c',
-                                                         dropdown_hover_color='#197b5c', anchor=tk.CENTER)
+                                                                                 '9', '10', '11', '12'], anchor=tk.CENTER)
         self.assignment_duetime_hour.place(x=100, y=420)
 
-        self.assignment_duetime_minute = ctk.CTkOptionMenu(self, width=60, values=['00', '15', '30', '45', '59'],
-                                                           fg_color='#1C9670', button_color='#1C9670',
-                                                           button_hover_color='#197b5c',
-                                                           dropdown_hover_color='#197b5c', anchor=tk.CENTER)
+        self.assignment_duetime_minute = ctk.CTkOptionMenu(self, width=60, values=['00', '15', '30', '45', '59'], anchor=tk.CENTER)
         self.assignment_duetime_minute.place(x=170, y=420)
 
-        self.assignment_duetime_convention = ctk.CTkOptionMenu(self, width=60, values=['AM', 'PM'], fg_color='#1C9670',
-                                                               button_color='#1C9670',
-                                                               button_hover_color='#197b5c',
-                                                               dropdown_hover_color='#197b5c', anchor=tk.CENTER)
+        self.assignment_duetime_convention = ctk.CTkOptionMenu(self, width=60, values=['AM', 'PM'], anchor=tk.CENTER)
         self.assignment_duetime_convention.place(x=240, y=420)
 
         self.assn_platform_hdr = ctk.CTkLabel(self, width=100, text="Assignment Platform",
@@ -114,9 +100,7 @@ class AddAssnWindow(ctk.CTkToplevel):  # Additional window to handle the options
         self.assignment_platform = ctk.CTkEntry(self, width=150, placeholder_text="Assignment Platform")
         self.assignment_platform.place(x=125, y=505)
 
-        self.confirm_assignment = ctk.CTkButton(self, width=100, height=30, text="Create Assignment",
-                                                fg_color='#1C9670', hover_color='#197b5c',
-                                                command=self.create_assignment)
+        self.confirm_assignment = ctk.CTkButton(self, width=100, height=30, text="Create Assignment", command=self.create_assignment)
         self.confirm_assignment.place(x=135, y=560)
 
     def create_assignment(self):  # Function to create a new assignment
@@ -195,12 +179,8 @@ class Assignment:  # Class that creates individual assignment objects
         self.assignmentPlatformLabel.pack(side=tk.LEFT, padx=3)
 
         self.assignmentStatusLabel = ctk.CTkOptionMenu(self.frame, width=80, height=25,
-                                                       values=['To Do', 'Doing', 'Done'],
-                                                       fg_color='#1C9670', button_color='#1C9670',
-                                                       button_hover_color='#197b5c',
-                                                       dropdown_hover_color='#197b5c', anchor=tk.CENTER,
-                                                       command=lambda value,
-                                                                      instname=assignmentName: self.update_status(value,
+                                                       values=['To Do', 'Doing', 'Done'], anchor=tk.CENTER,
+                                                       command=lambda value, instname=assignmentName: self.update_status(value,
                                                                                                                   instname))
         self.assignmentStatusLabel.set(f'{self.assignmentStatus}')
         self.assignmentStatusLabel.pack(side=tk.LEFT, padx=35)

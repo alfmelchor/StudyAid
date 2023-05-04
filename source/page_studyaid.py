@@ -19,11 +19,11 @@ class StudyAidPage:
         self.options_frame.grid(row=0, column=0, columnspan=6, sticky='nsew')
 
         self.timedButton = ctk.CTkButton(self.options_frame, text_color='white', fg_color="#4e5966",
-                                         text="Timed Session", hover_color='#1C9670', width=100, height=25,
+                                         text="Timed Session", width=100, height=25,
                                          anchor="n", command=lambda: self.open_session('Timed'))
         self.timedButton.pack(side=tk.LEFT, padx=5)
         self.focusButton = ctk.CTkButton(self.options_frame, text_color='white', fg_color="#4e5966",
-                                         text="Focus Session", hover_color='#1C9670', width=100, height=25,
+                                         text="Focus Session", width=100, height=25,
                                          anchor="n", command=lambda: self.open_session('Focus'))
         self.focusButton.pack(side=tk.LEFT, padx=5)
 
@@ -52,16 +52,14 @@ class TimedSession:
         self.timer = ctk.CTkLabel(self.frame, text="00:00:00", font=('Arial', 60, 'bold'))
         self.timer.pack(pady=0)
 
-        self.start_button = ctk.CTkButton(self.frame, width=80, text="START", fg_color='#1C9670', hover_color='#197b5c',
-                                          command=self.start_timer)
+        self.start_button = ctk.CTkButton(self.frame, width=80, text="START", command=self.start_timer)
         self.start_button.grid(row=3, column=2)
 
-        self.stop_button = ctk.CTkButton(self.frame, width=80, text="STOP", fg_color='#1C9670', hover_color='#197b5c',
-                                         command=self.stop_timer, state=ctk.DISABLED)
+        self.stop_button = ctk.CTkButton(self.frame, width=80, text="STOP", command=self.stop_timer, state=ctk.DISABLED)
         self.stop_button.grid(row=3, column=3)
 
-        self.reset_button = ctk.CTkButton(self.frame, width=80, text="RESET", fg_color='#1C9670', hover_color='#197b5c',
-                                          state='disabled', command=self.reset_timer)
+        self.reset_button = ctk.CTkButton(self.frame, width=80, text="RESET", state='disabled',
+                                          command=self.reset_timer)
         self.reset_button.grid(row=3, column=4)
 
         self.start_time = None
@@ -114,7 +112,6 @@ class FocusSession:
         self.session = ctk.CTkLabel(self.frame, text="Focus Session", font=('Arial', 20, 'bold')).pack(pady=10)
 
         self.timer_up = ctk.CTkButton(self.frame, text="", command=self.increment_timer, width=35, height=10,
-                                      fg_color='#1C9670', hover_color='#197b5c',
                                       image=ctk.CTkImage(light_image=Image.open('icons/arrow_icon.png').rotate(180),
                                                          size=(15, 12)))
         self.timer_up.pack()
@@ -123,21 +120,20 @@ class FocusSession:
         self.timer.pack()
 
         self.timer_down = ctk.CTkButton(self.frame, text="", command=self.decrement_timer, width=35, height=10,
-                                        fg_color='#1C9670', hover_color='#197b5c',
                                         image=ctk.CTkImage(light_image=Image.open('icons/arrow_icon.png'),
                                                            size=(15, 12)))
         self.timer_down.pack()
 
-        self.start_button = ctk.CTkButton(self.frame, width=80, text="START", fg_color='#1C9670', hover_color='#197b5c',
-                                          command=self.start_timer, state='disabled')
+        self.start_button = ctk.CTkButton(self.frame, width=80, text="START", command=self.start_timer,
+                                          state='disabled')
         self.start_button.grid(row=3, column=2)
 
-        self.pause_button = ctk.CTkButton(self.frame, width=80, text="PAUSE", fg_color='#1C9670', hover_color='#197b5c',
-                                          command=self.pause_timer, state='disabled')
+        self.pause_button = ctk.CTkButton(self.frame, width=80, text="PAUSE", command=self.pause_timer,
+                                          state='disabled')
         self.pause_button.grid(row=3, column=3)
 
-        self.reset_button = ctk.CTkButton(self.frame, width=80, text="RESET", fg_color='#1C9670', hover_color='#197b5c',
-                                          command=self.reset_timer, state='disabled')
+        self.reset_button = ctk.CTkButton(self.frame, width=80, text="RESET", command=self.reset_timer,
+                                          state='disabled')
         self.reset_button.grid(row=3, column=4)
 
         self.timer_running = False

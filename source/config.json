@@ -1,6 +1,7 @@
 {
   "Version": "0.1.0",
   "Appearance": "LIGHT",
+  "Accent_Color": "green",
   "Notifications": "NONE",
   "Notifications_Frequency": "NONE",
   "Class_Organization": "PERIODS"
