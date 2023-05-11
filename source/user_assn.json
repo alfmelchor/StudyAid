@@ -1,1 +1,10 @@
-[]
+[
+    {
+        "name": "AP Classroom",
+        "class": "1",
+        "duedate": "5/8/23",
+        "duetime": "10:00PM",
+        "platform": "AP Classroom",
+        "status": "To Do"
+    }
+]

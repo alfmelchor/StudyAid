@@ -11,7 +11,7 @@ assignments_made = []
 class AssignmentsPage:  # Class to handle the main frame that holds the header and the individual assignments
     def __init__(self, parent):
         self.parent = parent
-        self.frame = ctk.CTkFrame(self.parent, corner_radius=0)
+        self.frame = ctk.CTkFrame(self.parent.root, corner_radius=0)
         self.frame.propagate(False)
         self.frame.grid(row=1, rowspan=6, column=1, columnspan=6, sticky='nsew')
         self.frame.rowconfigure((1, 2, 3, 4, 5), weight=1)
@@ -34,9 +34,7 @@ class AssignmentsPage:  # Class to handle the main frame that holds the header a
                                   font=('Arial', 15)).pack(side=tk.LEFT, padx=10)
 
         self.sortbyButton = ctk.CTkOptionMenu(self.headerFrame, width=35, height=25,
-                                              values=['Sort By: Due Date', 'Sort By: Status', 'Sort By: Class'],
-                                              fg_color='#1C9670', button_color='#1C9670', button_hover_color='#197b5c',
-                                              dropdown_hover_color='#197b5c')
+                                              values=['Sort By: Due Date', 'Sort By: Status', 'Sort By: Class'])
         self.sortbyButton.pack(side=tk.RIGHT)
 
         self.createNewButton = ctk.CTkButton(self.headerFrame, width=35, height=25, text="+", anchor="center", command=self.create_new_assignment)

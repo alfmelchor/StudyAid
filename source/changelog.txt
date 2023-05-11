@@ -1,6 +1,5 @@
 VERSION 0.1.0 - Beta Release
-* Updated the settings file to config.json.
-- Removed the Credentials page. Sign-in is no longer required.
-- Removed Startup tab in Settings.
-- Removed Debug tab in Settings.
-+ Added functionality to the ChangeLog tab in settings. Upon opening the tab, any and all changes to the app will be displayed.
+* Beta version of StudyAid. Releases will be labeled with the following format - #.#.#
+  The first digit will represent a major build update (i.e. framework update, layout, multiple features etc.).
+  The second digit will represent moderate updates (i.e. features, bug fixes, optimization updates etc.).
+  The third digit will represent light updates (i.e. bug fixes and/or small optimization updates).
