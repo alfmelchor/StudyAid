@@ -21,7 +21,6 @@ with open('config.json', 'r') as f:
     f.close()
 
 ctk.set_appearance_mode(appearance)
-ctk.set_default_color_theme(f'themes/{accent_color}.json')
 
 
 class Application:  # Creates the root window for the program

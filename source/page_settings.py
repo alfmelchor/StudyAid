@@ -111,6 +111,8 @@ class InteractionSettings:
             data = json.load(file)
 
         data['Accent_Color'] = self.active_color
+        ctk.set_default_color_theme(f'themes/{accent_color}.json')
+        print("updated")
 
         with open('config.json', 'w') as file:
             json.dump(data, file, indent=2)
@@ -166,9 +168,6 @@ class StudyAidSettings:
 
         with open('config.json', 'w') as file:
             json.dump(data, file, indent=2)
-
-
-
 
 
 class ChangeLog:
