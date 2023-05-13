@@ -25,12 +25,12 @@ class StudyAidPage:
         self.timedButton.pack(side=tk.LEFT, padx=5)
         self.focusButton = ctk.CTkButton(self.options_frame, text_color='white', fg_color="#4e5966",
                                          text="Focus Session", width=100, height=25,
-                                         anchor="n", command=lambda: self.open_session('Focus'))
+                                         anchor="n", command=lambda: self.open_session('Focus'), state='disabled')
         self.focusButton.pack(side=tk.LEFT, padx=5)
 
         self.open_session()
 
-    def open_session(self, session_type='Focus'):
+    def open_session(self, session_type='Timed'):
         if session_type == 'Timed' and self.current_session != 'Timed':
             self.current_session = 'Timed'
             self.session = TimedSession(self, self.elements_parent)
@@ -43,7 +43,7 @@ class StudyAidWindow:
     def __init__(self, parent, elements):
         self.parent = parent
         self.elements = elements
-        self.frame = ctk.CTkFrame(self.parent.root, width=40, height=40, corner_radius=40, bg_color='#D9D9D9',
+        self.frame = ctk.CTkFrame(self.parent.root, width=40, height=40, corner_radius=40, bg_color=('#D9D9D9', '#333333'),
                                   fg_color='#414c59')
         self.frame.propagate(False)
         self.frame_expanded = False

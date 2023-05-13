@@ -117,7 +117,7 @@ class AddAssnWindow(ctk.CTkToplevel):  # Additional window to handle the options
                      "platform": ret_asn[4],
                      'status': ret_asn[5]}
             try:
-                with open("user_assn.json", "r") as file:
+                with open("elements/user_assn.json", "r") as file:
                     dicts = json.load(file)
             except (FileNotFoundError, json.decoder.JSONDecodeError):
                 dicts = []
@@ -128,12 +128,12 @@ class AddAssnWindow(ctk.CTkToplevel):  # Additional window to handle the options
                     found = True
                     if d != dict1:
                         dicts[i] = dict1
-                        with open("user_assn.json", "w") as file:
+                        with open("elements/user_assn.json", "w") as file:
                             json.dump(dicts, file, indent=4)
                     break
             if not found:
                 dicts.append(dict1)
-                with open("user_assn.json", "w") as file:
+                with open("elements/user_assn.json", "w") as file:
                     json.dump(dicts, file, indent=4)
 
             import_assignments(assn_page_frame)
@@ -183,9 +183,25 @@ class Assignment:  # Class that creates individual assignment objects
         self.assignmentStatusLabel.set(f'{self.assignmentStatus}')
         self.assignmentStatusLabel.pack(side=tk.LEFT, padx=35)
 
+        self.move_button = ctk.CTkButton(self.frame, height=30, width=10, text="")
+        self.move_button.pack(side=tk.RIGHT, anchor=tk.CENTER)
+
+        self.move_button.bind('<Button-1>', self.start_move)
+        self.move_button.bind('<B1-Motion>', self.move)
+
+    def start_move(self, event):
+        self._drag_start_y = event.y
+
+    def move(self, event):
+        new_y = self.frame.winfo_y() + (event.y - self._drag_start_y)
+        if new_y < self._drag_start_y:
+            print("move up")
+        else:
+            print("move down")
+
     @staticmethod
     def update_status(new_status, assn_name):  # Function to update the status of individual assignments
-        with open('user_assn.json', 'r') as file:
+        with open('elements/user_assn.json', 'r') as file:
             assignments = json.load(file)
 
         for item in assignments:
@@ -196,7 +212,7 @@ class Assignment:  # Class that creates individual assignment objects
                 else:
                     item['status'] = new_status
 
-        with open('user_assn.json', "w") as file:
+        with open('elements/user_assn.json', "w") as file:
             json.dump(assignments, file, indent=4)
 
         import_assignments(assn_page_frame)
@@ -205,7 +221,7 @@ class Assignment:  # Class that creates individual assignment objects
 def import_assignments(page):  # Function to import assignments from the JSON file
     AssignmentsPage.update_assignment_list()
     try:
-        with open("user_assn.json", "r") as file:
+        with open("elements/user_assn.json", "r") as file:
             assignments = json.load(file)
             for assn in assignments:
                 assignment = Assignment(page.childrenFrame, f"{assn['name']}", f"{assn['class']}",

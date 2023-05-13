@@ -3,7 +3,7 @@ import tkinter as tk
 import json
 from PIL import Image
 
-with open('config.json', 'r') as file:
+with open('elements/config.json', 'r') as file:
     data = json.load(file)
     version = data['Version']
     appearance = data['Appearance']
@@ -107,14 +107,13 @@ class InteractionSettings:
 
         self.active_color = color
 
-        with open('config.json', 'r') as file:
+        with open('elements/config.json', 'r') as file:
             data = json.load(file)
 
         data['Accent_Color'] = self.active_color
         ctk.set_default_color_theme(f'themes/{accent_color}.json')
-        print("updated")
 
-        with open('config.json', 'w') as file:
+        with open('elements/config.json', 'w') as file:
             json.dump(data, file, indent=2)
 
 
@@ -151,7 +150,7 @@ class StudyAidSettings:
         self.read_settings()
 
     def read_settings(self):
-        with open('config.json', 'r') as file:
+        with open('elements/config.json', 'r') as file:
             data = json.load(file)
 
         if data["SAWIN_SHOW"] == 1:
@@ -160,13 +159,13 @@ class StudyAidSettings:
             self.sawin_automin.select()
 
     def write_settings(self):
-        with open('config.json', 'r') as file:
+        with open('elements/config.json', 'r') as file:
             data = json.load(file)
 
         data['SAWIN_SHOW'] = self.sawin_show.get()
         data['SAWIN_AUTOMIN'] = self.sawin_automin.get()
 
-        with open('config.json', 'w') as file:
+        with open('elements/config.json', 'w') as file:
             json.dump(data, file, indent=2)
 
 
@@ -187,7 +186,7 @@ class ChangeLog:
         self.text = tk.Text(self.frame, width=950, height=550, bg=cl_bg, fg=cl_fg)
         self.text.pack()
 
-        with open('changelog.txt', 'r') as changelog:
+        with open('docs/changelog.txt', 'r') as changelog:
             changelog_text = changelog.read()
             self.text.insert('1.0', changelog_text)
 

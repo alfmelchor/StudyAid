@@ -4,23 +4,16 @@ from PIL import Image
 import json
 import time
 
-import page_assignments
-import page_settings
-import page_studyaid
+from source.pages import page_settings, page_studyaid, page_assignments
+from source.elements.functions import open_config
 
 WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 600
 
-with open('config.json', 'r') as f:
-    data = json.load(f)
-    version = data['Version']
-    appearance = data['Appearance']
-    accent_color = data["Accent_Color"]
-    sawin_show = data["SAWIN_SHOW"]
-    sawin_automin = data["SAWIN_AUTOMIN"]
-    f.close()
 
-ctk.set_appearance_mode(appearance)
+settings = open_config()
+ctk.set_appearance_mode(settings['appearance'])
+ctk.set_default_color_theme(f"themes/green.json")
 
 
 class Application:  # Creates the root window for the program
@@ -56,7 +49,7 @@ class StudyAidTimedElements:
         minutes, seconds = divmod(self.elapsed_time, 60)
         hours, minutes = divmod(minutes, 60)
         self.timer = ("{:02.0f}:{:02.0f}:{:02.0f}".format(hours, minutes, seconds))
-        if sawin_show == 1:
+        if settings['sawin_show'] == 1:
             study_window.timer.configure(text=self.timer)
         try:
             self.child.timer.configure(text=self.timer)
@@ -73,7 +66,7 @@ class StudyAidTimedElements:
 
     def timed_reset(self):
         self.timer = "00:00:00"
-        if sawin_show == 1:
+        if settings['sawin_show'] == 1:
             study_window.timer.configure(text="00:00:00")
         self.start_time = 0
         self.elapsed_time = 0
@@ -92,7 +85,7 @@ class StudyAidFocusElements:
 app = Application()
 sa_timed_elements = StudyAidTimedElements(app)
 sa_focus_elements = StudyAidFocusElements(app)
-if sawin_show == 1:
+if settings['sawin_show'] == 1:
     study_window = page_studyaid.StudyAidWindow(app, sa_timed_elements)
 
 
@@ -133,7 +126,7 @@ class Sidebar:  # Class to handle the Sidebar on the window
         self.settingsButton.place(x=10, y=140)
 
         self.versionLabel = ctk.CTkLabel(self.sidebar_frame, text_color='white', fg_color="transparent",
-                                         text=f"Version: {version}", width=100, height=25)
+                                         text=f"Version: {settings['version']}", width=100, height=25)
         self.versionLabel.pack(side=tk.BOTTOM)
 
 
@@ -164,10 +157,10 @@ def open_page(page):
         opened_frame = page_settings.SettingsPage(app)
         opened_page = 'Settings'
 
-    if sawin_show == 1:
+    if settings['sawin_show'] == 1:
         study_window.frame.lift()
 
 
 # Initial Calls
-open_page('StudyAid')
+open_page('Settings')
 app.root.mainloop()
